@@ -12,7 +12,7 @@ const comData = Joi.object({
   from: Joi.string().required()
 })
 
-createComData = Joi.object({
+const createComData = Joi.object({
   op: Joi.string().required(),
   community: comData
 })
