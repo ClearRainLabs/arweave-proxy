@@ -12,40 +12,20 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const fs = require('fs')
-const Arweave = require('arweave/node')
-const argv = require('yargs').argv
+const { arweave, wallet } = require('./utils')
+const createCommunity = require('./routes/createCommunity')
+const contractInteraction = require('./routes/contractInteraction')
+const { validateCreate, validateInteraction } = require('./validators')
 
-const { isValidTx } = require('../rain-js/dist/main')
-
-// Set Arweave parameters from commandline or defaults.
-const arweavePort = argv.arweavePort ? argv.arweavePort : 443
-const arweaveHost = argv.arweaveHost ? argv.arweaveHost : 'arweave.net'
-const arweaveProtocol = argv.arweaveProtocol ? argv.arweaveProtocol : 'https'
+// const { isValidUpload } = require('clearrain')
 
 // Set hooverd parameters.
-const port = argv.port ? argv.port : 1908
+const port = 1908
 
-const walletPath = process.env.WALLET_PATH || argv.walletFile
-
-if (!walletPath) {
-  console.log('ERROR: Please specify a wallet file to load using argument ' +
-          "'--wallet-file <PATH>'.")
-  process.exit()
-}
-
-const rawWallet = fs.readFileSync(walletPath)
-const wallet = JSON.parse(rawWallet)
-
-const arweave = Arweave.init({
-  host: arweaveHost, // Hostname or IP address for a Arweave node
-  port: arweavePort,
-  protocol: arweaveProtocol
-})
-
+/**
 async function handleRequest (req, res, next) {
   try {
-    if (!isValidTx(req.body)) {
+    if (!isValidUpload(req.body)) {
       res.status(400).send({ error: 'Arweave Proxy Upload Service: Invalid transaction provided' })
       return
     }
@@ -76,11 +56,12 @@ async function dispatchTX (tx, res) {
   const resp = await arweave.transactions.post(tx)
 
   const output = `Transaction ${tx.get('id')} dispatched to ` +
-          `${arweaveHost}:${arweavePort} with response: ${resp.status}.`
+          `arweave.net with response: ${resp.status}.`
   console.log(output)
 
   res.status(resp.status).send(output)
 }
+*/
 
 async function startServer () {
   console.log('Welcome to hooverd! 👋\n\nWe are...')
@@ -93,8 +74,7 @@ async function startServer () {
   console.log(`...using wallet ${address} (balance: ${balance} AR).`)
 
   const netInfo = await arweave.network.getInfo()
-  console.log('...dispatching transactions to Arweave host at',
-          `${arweaveHost}:${arweavePort},`,
+  console.log('...dispatching transactions to Arweave host,',
           `synchronised at block ${netInfo.height}.`)
 
   // Start the server itself.
@@ -105,7 +85,9 @@ async function startServer () {
     extended: true
   }))
 
-  app.post('/', handleRequest)
+  // app.post('/', handleRequest)
+  app.post('/create-community', validateCreate(), createCommunity)
+  app.post('/contract-interaction', validateInteraction(), contractInteraction)
 
   app.listen(port, (err) => {
     if (err) {
