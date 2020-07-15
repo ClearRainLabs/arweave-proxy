@@ -2,8 +2,6 @@ const { validationResult } = require('express-validator')
 const { interactWrite } = require('smartweave')
 const { wallet, arweave } = require('../utils')
 
-const CONTRACT_ID = process.env.CONTRACT_ID
-
 async function contractInteraction (req, res) {
   try {
     const errors = validationResult(req)
@@ -13,11 +11,12 @@ async function contractInteraction (req, res) {
       return
     }
 
-    const { jwt } = req.body
+    const { jwt, contractId } = req.body
 
+    // make sure the db holds the contract Id
     // test the interaction
 
-    const tx = await interactWrite(arweave, wallet, CONTRACT_ID, jwt)
+    const tx = await interactWrite(arweave, wallet, contractId, jwt)
 
     res.send(tx)
   } catch (e) {

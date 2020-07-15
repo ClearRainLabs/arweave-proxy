@@ -10,6 +10,7 @@ exports.validateCreate = () => {
 
 exports.validateInteraction = () => {
   return [
-    body('jwt', 'key \'jwt\' is invalid or does not exist').exists().isJWT()
+    body('jwt', 'key \'jwt\' is invalid or does not exist').exists().isJWT(),
+    body('contractId', 'key \'contractId\' is invalid or does not exist').exists()
   ]
 }
