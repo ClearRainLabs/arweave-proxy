@@ -1,4 +1,23 @@
-# hooverd
+# Arweave Proxy Server
+
+### Set up
+
+Create .env file with the path to your arweave wallet file
+
+```bash
+WALLET_PATH=./your-arweave-keyfile.json
+```
+
+### Local Development
+
+```bash
+yarn start
+```
+
+*NOTE: The rest of the documentation is the from the server I forked.*
+
+## hooverd
+
 The hoover daemon is a simple local HTTP server for delegated Arweave transaction generation, signing, and dispatch.
 
 `hooverd` can serve a variety of different roles:
