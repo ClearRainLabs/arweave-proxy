@@ -28,16 +28,22 @@ async function createCommunity (req, res) {
 }
 
 function createInitState (did, name, isOpen) {
-  return {
+  const initState = {
     name,
     isOpen,
     owner: did,
-    admins: { did: true },
+    admins: {},
     moderators: {},
     members: {},
     children: {},
     nonces: {}
   }
+
+  initState.admins[did] = true
+  initState.moderators[did] = true
+  initState.members[did] = true
+
+  return initState
 }
 
 module.exports = createCommunity

@@ -15,53 +15,10 @@ const cors = require('cors')
 const { arweave, wallet } = require('./utils')
 const createCommunity = require('./routes/createCommunity')
 const contractInteraction = require('./routes/contractInteraction')
-const { validateCreate, validateInteraction } = require('./validators')
+const uploadPost = require('./routes/blogPost')
+const { validateCreate, validateInteraction, validateBlogPost } = require('./validators')
 
-// const { isValidUpload } = require('clearrain')
-
-// Set hooverd parameters.
 const port = 1908
-
-/**
-async function handleRequest (req, res, next) {
-  try {
-    if (!isValidUpload(req.body)) {
-      res.status(400).send({ error: 'Arweave Proxy Upload Service: Invalid transaction provided' })
-      return
-    }
-
-    const tx = await arweave.createTransaction({ data: req.body.jwt }, wallet)
-
-    const tags = req.body.tags
-
-    Object.keys(tags).forEach(key => {
-      tx.addTag(key, tags[key])
-    })
-
-    dispatchTX(tx, res)
-  } catch (e) {
-    console.log(e, 'THE ERROR')
-
-    next(e)
-  }
-}
-
-async function dispatchTX (tx, res) {
-  // Manually set the transaction anchor, for now.
-  const anchorId = await arweave.api.get('/tx_anchor').then(x => x.data)
-  tx.last_tx = anchorId
-
-  // Sign and dispatch the TX, forwarding the response code as our own.
-  await arweave.transactions.sign(tx, wallet)
-  const resp = await arweave.transactions.post(tx)
-
-  const output = `Transaction ${tx.get('id')} dispatched to ` +
-          `arweave.net with response: ${resp.status}.`
-  console.log(output)
-
-  res.status(resp.status).send(output)
-}
-*/
 
 async function startServer () {
   console.log('Welcome to hooverd! 👋\n\nWe are...')
@@ -88,6 +45,7 @@ async function startServer () {
   // app.post('/', handleRequest)
   app.post('/create-community', validateCreate(), createCommunity)
   app.post('/contract-interaction', validateInteraction(), contractInteraction)
+  app.post('/blog-post', validateBlogPost(), uploadPost)
 
   app.listen(port, (err) => {
     if (err) {

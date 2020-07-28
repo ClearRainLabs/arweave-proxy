@@ -11,12 +11,12 @@ async function contractInteraction (req, res) {
       return
     }
 
-    const { jwt, contractId } = req.body
+    const { jwt, communityTxId } = req.body
 
     // make sure the db holds the contract Id
     // test the interaction
 
-    const tx = await interactWrite(arweave, wallet, contractId, jwt)
+    const tx = await interactWrite(arweave, wallet, communityTxId, jwt)
 
     res.send(tx)
   } catch (e) {
