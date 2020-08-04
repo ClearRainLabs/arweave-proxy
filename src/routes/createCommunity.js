@@ -19,6 +19,8 @@ async function createCommunity (req, res) {
 
     const txId = await createContractFromTx(arweave, wallet, CONTRACT_SRC, JSON.stringify(initState))
 
+    console.log(`Created a community at ${txId}`)
+
     res.send(txId)
   } catch (e) {
     res.status(400).send({

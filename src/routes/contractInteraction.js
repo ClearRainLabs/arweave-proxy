@@ -16,9 +16,11 @@ async function contractInteraction (req, res) {
     // make sure the db holds the contract Id
     // test the interaction
 
-    const tx = await interactWrite(arweave, wallet, communityTxId, jwt)
+    const txId = await interactWrite(arweave, wallet, communityTxId, jwt)
 
-    res.send(tx)
+    console.log(`Interacted with contract ${communityTxId} at tx ${txId}`)
+
+    res.send(txId)
   } catch (e) {
     res.status(400).send({
       error: `Arweave Proxy Upload Service Error: ${e}`
