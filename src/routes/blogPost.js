@@ -24,7 +24,7 @@ async function uploadPost (req, res) {
 
     res.send({
       status: postRes.status,
-      txId: postTx.id
+      tx: postTx
     })
   } catch (e) {
     res.status(400).send({
