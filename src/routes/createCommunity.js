@@ -1,8 +1,7 @@
 const { validationResult } = require('express-validator')
 const { createContractFromTx } = require('smartweave')
 const { wallet, arweave } = require('../utils')
-
-const CONTRACT_SRC = process.env.CONTRACT_SRC
+const { CONTRACT_SRC } = require('outpost-protocol')
 
 async function createCommunity (req, res) {
   try {

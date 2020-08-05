@@ -21,7 +21,7 @@ const { validateCreate, validateInteraction, validateBlogPost } = require('./val
 const port = 1908
 
 async function startServer () {
-  console.log('Welcome to hooverd! 👋\n\nWe are...')
+  console.log('Welcome to the Arweave Upload Service! 👋\n\nWe are...')
 
   // Print introductory information to the console.
   console.log(`...starting a server at http://localhost:${port}.`)
