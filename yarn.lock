@@ -1670,9 +1670,9 @@ os-tmpdir@~1.0.2:
   integrity sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=
 
 outpost-protocol@^1.1.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/outpost-protocol/-/outpost-protocol-1.1.1.tgz#e3423cf339982b9696a0a63f1b7815f0ddefde0d"
-  integrity sha512-Xe0UegKgr1OZHhDwxRL6QmWAI+chuoiktO5bkMryXGYWsjxGsMue3qBEsO9JjliwysOMolJY5ME6Aqa9+/Xg6w==
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/outpost-protocol/-/outpost-protocol-1.2.0.tgz#a5419347da02dae327dbf60eff2e0977c1ca520d"
+  integrity sha512-uRIqmLETLSw+cWPqcyKdWEvrq4OGnT270uPKj78Duy/jPchhWQotscHlwcKTB0oN4YU7J9ty/9vnbvV5dfSalA==
 
 p-cancelable@^1.0.0:
   version "1.1.0"

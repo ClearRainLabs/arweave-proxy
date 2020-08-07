@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator')
 const { createContractFromTx } = require('smartweave')
 const { wallet, arweave } = require('../utils')
-const { CONTRACT_SRC } = require('outpost-protocol')
+const { CONTRACT_SRC, createInitState } = require('outpost-protocol')
 
 async function createCommunity (req, res) {
   try {
@@ -26,25 +26,6 @@ async function createCommunity (req, res) {
       error: `Arweave Proxy Upload Service Error: ${e}`
     })
   }
-}
-
-function createInitState (did, name, isOpen) {
-  const initState = {
-    name,
-    isOpen,
-    owner: did,
-    admins: {},
-    moderators: {},
-    members: {},
-    children: {},
-    nonces: {}
-  }
-
-  initState.admins[did] = true
-  initState.moderators[did] = true
-  initState.members[did] = true
-
-  return initState
 }
 
 module.exports = createCommunity
