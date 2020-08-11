@@ -24,8 +24,7 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "start": "nodemon ./src/index.js",
-    "start:prod": "NODE_ENV=production yarn start"
+    "start": "nodemon ./src/index.js"
   },
   "keywords": [
     "arweave",
