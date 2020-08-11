@@ -20,7 +20,10 @@ async function createCommunity (req, res) {
 
     console.log(`Created a community at ${txId}`)
 
-    res.send(txId)
+    res.send({
+      txId,
+      initState: JSON.stringify(initState)
+    })
   } catch (e) {
     res.status(400).send({
       error: `Arweave Proxy Upload Service Error: ${e}`
