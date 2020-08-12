@@ -18,7 +18,7 @@ const contractInteraction = require('./routes/contractInteraction')
 const uploadPost = require('./routes/blogPost')
 const { validateCreate, validateInteraction, validateBlogPost } = require('./validators')
 
-const port = 1908
+const port = process.env.PORT
 
 async function startServer () {
   console.log('Welcome to the Arweave Upload Service! 👋\n\nWe are...')

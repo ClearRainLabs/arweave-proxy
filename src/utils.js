@@ -1,5 +1,4 @@
 const Arweave = require('arweave/node')
-const fs = require('fs')
 
 // init Arweave js
 const arweave = Arweave.init({
@@ -8,16 +7,14 @@ const arweave = Arweave.init({
   port: 443
 })
 
-// init wallet
-const walletPath = process.env.WALLET_PATH
+const rawWallet = process.env.RAW_WALLET
 
-if (!walletPath) {
+if (!rawWallet) {
   console.log('ERROR: Please specify a wallet file to load using argument ' +
           "'--wallet-file <PATH>'.")
   process.exit()
 }
 
-const rawWallet = fs.readFileSync(walletPath)
 const wallet = JSON.parse(rawWallet)
 
 module.exports = {
