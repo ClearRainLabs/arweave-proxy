@@ -6,3 +6,6 @@ test-key\.json
 test-unsigned-tx\.json
 
 .env
+
+encryptWallet.js
+decryptWallet.js

@@ -1,4 +1,7 @@
 const Arweave = require('arweave/node')
+const crypto = require('crypto')
+const fs = require('fs')
+const path = require('path')
 
 // init Arweave js
 const arweave = Arweave.init({
@@ -7,13 +10,19 @@ const arweave = Arweave.init({
   port: 443
 })
 
-const rawWallet = process.env.RAW_WALLET
+const password = process.env.SECRET_PASSWORD
 
-if (!rawWallet) {
-  console.log('ERROR: Please specify a wallet file to load using argument ' +
-          "'--wallet-file <PATH>'.")
-  process.exit()
-}
+const algorithm = 'aes-192-cbc'
+const key = crypto.scryptSync(password, 'salt', 24)
+const iv = Buffer.alloc(16)
+
+const decipher = crypto.createDecipheriv(algorithm, key, iv)
+
+const walletPath = path.resolve(__dirname, '../wallet.sec')
+const encrypted = fs.readFileSync(walletPath)
+
+let rawWallet = decipher.update(encrypted, 'hex', 'utf8')
+rawWallet += decipher.final('utf8')
 
 const wallet = JSON.parse(rawWallet)
 
