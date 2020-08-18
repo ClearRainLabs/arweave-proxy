@@ -8,9 +8,9 @@ const algorithm = 'aes-192-cbc'
 const key = crypto.scryptSync(password, 'salt', 24)
 const iv = Buffer.alloc(16)
 
-const decipher = crypto.createDecipheriv(algorithm, key, iv)
-const encrypted = fs.readFileSync('./wallet.sec')
+const cipher = crypto.createCipheriv(algorithm, key, iv)
 
-let decrypted = decipher.update(encrypted, 'hex', 'utf8')
-decrypted += decipher.final('utf8')
-console.log(decrypted)
+const input = fs.createReadStream(process.env.WALLET_PATH)
+const output = fs.createWriteStream('./wallet.sec')
+
+input.pipe(cipher).pipe(output)

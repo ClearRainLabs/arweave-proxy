@@ -7,5 +7,5 @@ test-unsigned-tx\.json
 
 .env
 
-encryptWallet.js
+decryptWallet.js
 wallet.sec
