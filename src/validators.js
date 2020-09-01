@@ -22,3 +22,9 @@ exports.validateBlogPost = () => {
     body('did', 'key \'did\' does not exist or is invalid').exists().contains('did:3:')
   ]
 }
+
+exports.validateImageUpload = () => {
+  return [
+    body('did', 'key \'did\' does not exist or is invalid').exists().contains('did:3:')
+  ]
+}

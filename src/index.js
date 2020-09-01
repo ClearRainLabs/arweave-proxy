@@ -18,7 +18,7 @@ const createCommunity = require('./routes/createCommunity')
 const contractInteraction = require('./routes/contractInteraction')
 const uploadPost = require('./routes/blogPost')
 const uploadImage = require('./routes/imageUpload')
-const { validateCreate, validateInteraction, validateBlogPost } = require('./validators')
+const { validateCreate, validateInteraction, validateBlogPost, validateImageUpload } = require('./validators')
 
 const port = process.env.PORT
 
@@ -49,7 +49,7 @@ async function startServer () {
   app.post('/create-community', validateCreate(), createCommunity)
   app.post('/contract-interaction', validateInteraction(), contractInteraction)
   app.post('/blog-post', validateBlogPost(), uploadPost)
-  app.post('/image-upload', uploadImage)
+  app.post('/image-upload', validateImageUpload(), uploadImage)
 
   app.listen(port, (err) => {
     if (err) {
