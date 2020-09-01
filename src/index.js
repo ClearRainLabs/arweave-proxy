@@ -12,10 +12,12 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const fileUpload = require('express-fileupload')
 const { arweave, wallet } = require('./utils')
 const createCommunity = require('./routes/createCommunity')
 const contractInteraction = require('./routes/contractInteraction')
 const uploadPost = require('./routes/blogPost')
+const uploadImage = require('./routes/imageUpload')
 const { validateCreate, validateInteraction, validateBlogPost } = require('./validators')
 
 const port = process.env.PORT
@@ -41,11 +43,13 @@ async function startServer () {
   app.use(bodyParser.urlencoded({
     extended: true
   }))
+  app.use(fileUpload())
 
   // app.post('/', handleRequest)
   app.post('/create-community', validateCreate(), createCommunity)
   app.post('/contract-interaction', validateInteraction(), contractInteraction)
   app.post('/blog-post', validateBlogPost(), uploadPost)
+  app.post('/image-upload', uploadImage)
 
   app.listen(port, (err) => {
     if (err) {
