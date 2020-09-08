@@ -21,15 +21,13 @@ async function uploadImage (req, res) {
   const { data, mimetype } = req.files.image
 
   const imgTx = await arweave.createTransaction({ data }, wallet)
-  imgTx.addTag('App-Name', 'Outpost-Image')
   imgTx.addTag('Content-Type', mimetype)
   imgTx.addTag('DID', req.body.did)
 
   const postRes = await dispatchTx(imgTx)
 
-  res.send({
-    status: postRes.status,
-    tx: imgTx
+  res.status(postRes.status).send({
+    txId: imgTx.id
   })
 }
 
