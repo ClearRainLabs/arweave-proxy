@@ -13,6 +13,7 @@
     "express-fileupload": "^1.2.0",
     "express-validator": "^6.6.0",
     "outpost-protocol": "^1.1.0",
+    "showdown": "^1.9.1",
     "smartweave": "https://arweave.net/AM-u4X2po-3Tx7fma3lRonCfLwrjI42IALwDL_YFXBs"
   },
   "devDependencies": {

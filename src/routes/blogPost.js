@@ -1,6 +1,9 @@
 const { validationResult } = require('express-validator')
 const { wallet, arweave } = require('../utils')
 const dispatchTx = require('../dispatchTx')
+const showdown = require('showdown')
+
+const converter = new showdown.Converter()
 
 async function uploadPost (req, res) {
   try {
@@ -11,11 +14,13 @@ async function uploadPost (req, res) {
       return
     }
 
-    const { jwt, did, communityTxId } = req.body
+    const { payload, did, communityTxId } = req.body
 
-    const postTx = await arweave.createTransaction({ data: jwt }, wallet)
-    postTx.addTag('App-Name', 'Outpost-Blog')
-    postTx.addTag('App-Version', '0.1.0')
+    payload.postData.postText = converter.makeHtml(payload.postData.postText.replace(/\\/g, '<br/>'))
+
+    const postTx = await arweave.createTransaction({ data: JSON.stringify(payload) }, wallet)
+    postTx.addTag('App-Name', 'Outpost-Blog-Test-1')
+    postTx.addTag('App-Version', '0.2.0')
     postTx.addTag('Community', communityTxId)
     postTx.addTag('DID', did)
 

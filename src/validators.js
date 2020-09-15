@@ -17,7 +17,7 @@ exports.validateInteraction = () => {
 
 exports.validateBlogPost = () => {
   return [
-    body('jwt', 'key \'jwt\' is invalid or does not exist').exists().isJWT(),
+    body('payload', 'key \'payload\' is invalid or does not exist').exists(),
     body('communityTxId', 'key \'communityTxId\' is invalid or does not exist').exists(),
     body('did', 'key \'did\' does not exist or is invalid').exists().contains('did:3:')
   ]
