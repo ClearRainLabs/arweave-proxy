@@ -12,6 +12,7 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const helmet = require('helmet')
 const fileUpload = require('express-fileupload')
 const { arweave, wallet } = require('./utils')
 const createCommunity = require('./routes/createCommunity')
@@ -44,6 +45,7 @@ async function startServer () {
     extended: true
   }))
   app.use(fileUpload())
+  app.use(helmet())
 
   // app.post('/', handleRequest)
   app.post('/create-community', validateCreate(), createCommunity)
