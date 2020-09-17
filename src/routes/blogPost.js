@@ -53,8 +53,6 @@ const setFeaturedImage = (payload) => {
 
   const featuredImg = payload.postData.postText.match(imgRegex)[0].split(/src="/)[1]
   payload.featuredImg = featuredImg
-
-  console.log(payload.featuredImg, 'THE FEATURED IMAGE')
 }
 
 const encryptUpload = (uploadData) => {
