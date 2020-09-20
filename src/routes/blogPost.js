@@ -24,7 +24,7 @@ async function uploadPost (req, res) {
     const encrypted = encryptUpload(JSON.stringify(payload))
 
     const postTx = await arweave.createTransaction({ data: encrypted }, wallet)
-    postTx.addTag('App-Name', 'Outpost-Blog-Test-3')
+    postTx.addTag('App-Name', 'Outpost-Blog')
     postTx.addTag('App-Version', '0.2.0')
     postTx.addTag('Community', communityTxId)
     postTx.addTag('DID', did)
@@ -50,6 +50,8 @@ async function uploadPost (req, res) {
 
 const setFeaturedImage = (payload) => {
   const imgRegex = /<img[^>]+src="http([^">]+)/
+
+  if (!payload.postData.postText.match(imgRegex)) return
 
   const featuredImg = payload.postData.postText.match(imgRegex)[0].split(/src="/)[1]
   payload.featuredImg = featuredImg
